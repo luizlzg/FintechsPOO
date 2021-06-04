@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
 contas = [[123, 321]]
-
+#
 
 def autenticacao(usuario,senha):
     for conta in contas:
