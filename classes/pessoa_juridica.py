@@ -48,6 +48,19 @@ class PessoaJuridica(Pessoa):  # Parte Luiz F
                 f'Desculpe, Sr(a) {self.__nome_fantasia}. Infelizmente, não encontramos registros com esse nome no nosso '
                 f'banco de dados.')
 
-    def criar_contapj(self):  # falta implementar
+    def criar_contapj(self):
+      PessoaJuridica.pessoa_juridica.append(self)
+      print("Solicitação de criação de conta atendida! Aguarde um momento.")
 
-        pass
+      numero_conta = str(randint(10**4,10**5))+'-'+str(randint(1,10))
+      agencia = "001"
+      nome_titular = self.__nome_fantasia
+      tipo_conta = "Conta Corrente"
+      taxa_rendimento = 0
+      tipo_produto = "Conta"
+      saldo = 0
+      nova_conta = Conta(saldo,nome_titular,tipo_produto,agencia,numero_conta,taxa_rendimento,tipo_conta)
+      self.contas_juridicas.append(nova_conta)
+      print(f'Parabens! A sua empresa {nome_titular} está com a conta ativa!')
+      print(f"O numero da sua conta é:{nova_conta.numero_conta}")
+
