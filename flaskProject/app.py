@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
-contas = [[123, 321]]
-#
+contas = [[123, 321,"teste","teste@hotmail.com"]]
+
 
 def autenticacao(usuario,senha):
     for conta in contas:
@@ -28,8 +28,18 @@ def login():
 def autentica():
     user = int(request.form['usuario'])
     senha = int(request.form['senha'])
-    if autenticacao(user,senha):
-        return render_template("usuario.html",name=user)
+    global sessao
+    if autenticacao(user, senha):
+        sessao = user
+        info = []
+        for conta in contas:
+            if sessao == conta[0]:
+                info = conta
+                break
+            else:
+                print("Usuário não encontrado.")
+        name = info[2]
+        return render_template("usuario.html",name=name)
     else:
         return render_template("login_erro.html")
 
@@ -41,8 +51,39 @@ def signin():
 def conta_criada():
     cpfcnpj = int(request.form['usuario'])
     senha = int(request.form['senha'])
-    contas.append([cpfcnpj, senha])
+    nome = request.form['nome']
+    email = request.form['email']
+    contas.append([cpfcnpj, senha,nome,email])
     return render_template("conta_criada.html")
+
+@app.route('/menu')
+def menu():
+    return render_template("menu.html")
+
+@app.route('/perfil')
+def perfil():
+    info = []
+    for conta in contas:
+        if sessao == conta[0]:
+            info = conta
+            break
+        else:
+            print("Usuário não encontrado.")
+    name = info[2]
+    email = info[3]
+    return render_template("perfil.html",nome=name,email=email)
+
+@app.route('/usuario')
+def usuario():
+    info = []
+    for conta in contas:
+        if sessao == conta[0]:
+            info = conta
+            break
+        else:
+            print("Usuário não encontrado.")
+    user = info[2]
+    return render_template("usuario.html",name=user)
 
 
 if __name__ == '__main__':
