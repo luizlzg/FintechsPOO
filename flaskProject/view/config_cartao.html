@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Configurar Cartão</title>
+</head>
+<body>
+    <a href="menu">Voltar     </a>
+        <h2>Configurar seu cartão TechFin</h2>
+        <br><br>
+        <p>Vencimento atual:     </p>
+        <br>
+        <strong>{{ vencimento }}</strong>
+        <br><br><br>
+        <form action="config_vencimento" method="POST">
+            <table>
+                <tr>
+                    <td>Atualizar Vencimento</td>
+                    <td><input type="text" name="vencimento"></td>
+            </table>
+            <input type="submit" value="Alterar">
+        </form>
+        <br><br><br><br>
+        <p>Limite:     </p>
+        <strong>{{ limite }}</strong>
+</body>
+</html>

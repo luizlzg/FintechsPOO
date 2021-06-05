@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
 
-contas = [[123, 321,"teste","teste@hotmail.com"]]
+contas = [[123, '321', "teste", "teste@hotmail.com", "5000", "27"]]
 
 
-def autenticacao(usuario,senha):
+def autenticacao(usuario, senha):
     for conta in contas:
         if usuario and senha in conta:
             return True
@@ -20,14 +20,16 @@ app = Flask(__name__, template_folder="view")
 def home():
     return render_template("index.html")
 
+
 @app.route('/login')
 def login():
     return render_template("login.html")
 
+
 @app.route('/autentica',methods=['POST'])
 def autentica():
     user = int(request.form['usuario'])
-    senha = int(request.form['senha'])
+    senha = str(request.form['senha'])
     global sessao
     if autenticacao(user, senha):
         sessao = user
@@ -39,26 +41,31 @@ def autentica():
             else:
                 print("Usuário não encontrado.")
         name = info[2]
-        return render_template("usuario.html",name=name)
+        return render_template("usuario.html", name=name)
     else:
         return render_template("login_erro.html")
+
 
 @app.route('/signin')
 def signin():
     return render_template("criar_conta.html")
 
+
 @app.route('/conta_criada',methods=["POST"])
 def conta_criada():
     cpfcnpj = int(request.form['usuario'])
-    senha = int(request.form['senha'])
+    senha = str(request.form['senha'])
     nome = request.form['nome']
     email = request.form['email']
-    contas.append([cpfcnpj, senha,nome,email])
+    renda_mensal = request.form['renda']
+    contas.append([cpfcnpj, senha, nome, email, renda_mensal, "27"])
     return render_template("conta_criada.html")
+
 
 @app.route('/menu')
 def menu():
     return render_template("menu.html")
+
 
 @app.route('/perfil')
 def perfil():
@@ -73,17 +80,53 @@ def perfil():
     email = info[3]
     return render_template("perfil.html",nome=name,email=email)
 
+
 @app.route('/usuario')
 def usuario():
     info = []
+    encontrou = False
     for conta in contas:
         if sessao == conta[0]:
             info = conta
+            encontrou = True
             break
-        else:
+        elif not encontrou:
             print("Usuário não encontrado.")
     user = info[2]
-    return render_template("usuario.html",name=user)
+    return render_template("usuario.html", name=user)
+
+
+@app.route('/config_cartao')
+def config_cartao():
+    info = []
+    encontrou = False
+    for conta in contas:
+        if sessao == conta[0]:
+            info = conta
+            encontrou = True
+            break
+        elif not encontrou:
+            print("Usuário não encontrado.")
+    limite = "R$" + str(float(info[-2])/2.0)
+
+    return render_template('config_cartao.html', vencimento='Todo dia 27', limite=limite)
+
+
+@app.route('/config_vencimento', methods=['POST'])
+def config_vencimento():
+    novo_vencimento = str(request.form['vencimento'])
+    aux = 0
+    encontrou = False
+    for conta in range(len(contas)):
+        if sessao == contas[conta][0]:
+            aux = conta
+            encontrou = True
+            break
+        elif not encontrou:
+            print("Usuário não encontrado.")
+    contas[aux][-1] = novo_vencimento
+
+    return render_template("config_vencimento.html")
 
 
 if __name__ == '__main__':
