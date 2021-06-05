@@ -123,7 +123,9 @@ class PessoaJuridica(Pessoa):  # Parte Luiz F
       tipo_produto = "Conta"
       saldo = 0
       nova_conta = Conta(saldo,nome_titular,tipo_produto,agencia,numero_conta,taxa_rendimento,tipo_conta)
-      self.contas_juridicas.append(nova_conta)
-      print(f'Parabens! A sua empresa {nome_titular} está com a conta ativa!')
-      print(f"O numero da sua conta é:{nova_conta.numero_conta}")
-
+        
+      while nova_conta.add_conta() != 0:
+          numero_conta = str(randint(10 ** 4, 10 ** 5)) + '-' + str(randint(1, 10))
+          nova_conta = Conta(saldo, nome_titular, tipo_produto, agencia, numero_conta, taxa_rendimento, tipo_conta)
+      else:
+          self.contas_juridicas.append(nova_conta)
