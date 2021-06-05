@@ -11,5 +11,15 @@
     <p>Nome de preferência:     {{ nome }}</p>
     <br>
     <p>E-mail:     {{ email }}</p>
+    <br>
+    <p>Renda Mensal:     {{ renda }}</p>
+    <form action="config_renda" method="POST">
+            <table>
+                <tr>
+                    <td>Atualizar Renda Mensal</td>
+                    <td><input type="text" name="renda"></td>
+            </table>
+            <input type="submit" value="Alterar">
+        </form>
   </body>
 </html>

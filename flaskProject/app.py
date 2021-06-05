@@ -84,7 +84,8 @@ def perfil():
             print("Usuário não encontrado.")
     name = info[2]
     email = info[3]
-    return render_template("perfil.html", nome=name, email=email)
+    renda = info[-2]
+    return render_template("perfil.html", nome=name, email=email, renda=renda)
 
 
 @app.route('/usuario')
@@ -119,8 +120,9 @@ def config_cartao():
         elif not encontrou:
             print("Usuário não encontrado.")
     limite = "R$" + str(float(info[-2])/2.0)
+    vencimento = info[-1]
 
-    return render_template('config_cartao.html', vencimento='Todo dia 27', limite=limite)
+    return render_template('config_cartao.html', vencimento=f'Todo dia {vencimento}', limite=limite)
 
 
 @app.route('/config_vencimento', methods=['POST'])
@@ -138,6 +140,23 @@ def config_vencimento():
     contas[aux][-1] = novo_vencimento
 
     return render_template("config_vencimento.html")
+
+
+@app.route('/config_renda', methods=['POST'])
+def config_renda():
+    nova_renda = str(request.form['renda'])
+    aux = 0
+    encontrou = False
+    for conta in range(len(contas)):
+        if sessao == contas[conta][0]:
+            aux = conta
+            encontrou = True
+            break
+        elif not encontrou:
+            print("Usuário não encontrado.")
+    contas[aux][-2] = nova_renda
+
+    return render_template("config_renda.html")
 
 
 if __name__ == '__main__':
