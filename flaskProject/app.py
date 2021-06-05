@@ -47,6 +47,10 @@ def autentica():
 def signin():
     return render_template("criar_conta.html")
 
+@app.route('/signinpj')
+def signin():
+    return render_template("criar_conta_pj.html")
+
 @app.route('/conta_criada',methods=["POST"])
 def conta_criada():
     cpf = int(request.form['usuario'])
