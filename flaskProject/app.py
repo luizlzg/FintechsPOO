@@ -57,7 +57,7 @@ def signinpj():
     return render_template("criar_conta_pj.html")
 
 
-@app.route('/conta_criada',methods=["POST"])
+@app.route('/conta_criada', methods=["POST"])
 def conta_criada():
     cpf = int(request.form['usuario'])
     senha = int(request.form['senha'])
