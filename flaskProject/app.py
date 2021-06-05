@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 contas = [[123, '321', "teste", "teste@hotmail.com", "5000", "27"]]
 
-
+#
 def autenticacao(usuario, senha):
     for conta in contas:
         if usuario and senha in conta:
