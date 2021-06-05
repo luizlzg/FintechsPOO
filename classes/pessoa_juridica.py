@@ -15,7 +15,7 @@ class PessoaJuridica(Pessoa):  # Parte Luiz F
         self.produtos_juridicos = []
 
     def acessar_produto(self):  # consultar depois para melhorar
-        if self.__razao_social in PessoaJuridica.pessoa_juridica:
+        if self.__nome_fantasia in PessoaJuridica.pessoa_juridica:
             print("Quais produtos você deseja consultar? ")
             print("(1) Cartão")
             print("(2) Conta")
@@ -37,8 +37,71 @@ class PessoaJuridica(Pessoa):  # Parte Luiz F
         else:
             print("Desculpe, essa empresa não consta nos nossos registros")
 
-    def solicitar_produto(self):  # falta implementar
-        pass
+    def solicitar_cartao(self):
+        cartao = 0
+        if self.__nome_fantasia in PessoaJuridica.pessoa_juridica:
+            print(f"Parabéns! A sua solicitação de cartão foi aceita e seu produto será adquirido!")
+            cartao = 1
+        else:
+            print("Infelizmente sua solicitação de cartão foi negada.")
+
+        if cartao:
+            print("Agora que sua solicitação foi aceita seu cartão será gerado!")
+            sleep(15)
+
+            numero_cartao = ""
+            for i in range(1, 17):
+                numero = randint(0, 9)
+                if i % 4 == 0:
+                    numero_cartao = numero_cartao + str(numero) + " "
+                else:
+                    numero_cartao = numero_cartao + str(numero)
+
+            senha = str(randint(10 ** 3, 10 ** 4))
+
+            codigo_seguranca = str(randint(10 ** 2, 10 ** 3))
+
+            validade = "01/01/2100"
+
+            bandeira = "MasterCard"
+
+            tipo_indice = int(input(
+                "Qual tipo de cartão deseja? \n Digite 1 para Cartão de Crédito \n"
+                " Digite 2 para Cartão de Débito \n Digite 3 para Cartão Digital \n"))
+            tipo = ""
+            if tipo_indice == 1:
+                tipo = "Cartão de Crédito"
+            elif tipo_indice == 2:
+                tipo = "Cartão de Débito"
+            elif tipo_indice == 3:
+                tipo = "Cartão Digital"
+            else:
+                print("Opção inválida")
+
+            tipo_produto = "Cartão"
+            saldo = 0
+            juros = 0.01
+            limite = 1000
+
+            cartao_criado = Cartao(saldo, self.__nome_fantasia, tipo_produto, numero_cartao, senha, codigo_seguranca, validade,
+                                   bandeira, tipo, juros, limite)
+            while cartao_criado.add_cartao() != 0:
+
+                numero_cartao = ""
+                for i in range(1, 17):
+                    numero = randint(0, 9)
+                    if i % 4 == 0:
+                        numero_cartao = numero_cartao + str(numero) + " "
+                    else:
+                        numero_cartao = numero_cartao + str(numero)
+
+                cartao_criado = Cartao(saldo, self.__nome_fantasia, tipo_produto, numero_cartao, senha, codigo_seguranca, validade,
+                                   bandeira, tipo, juros, limite)
+
+            else:
+                self.produtos.append(cartao_criado)
+
+        
 
     def solicitar_suporte(self):
         if self.__nome_fantasia in PessoaJuridica.pessoa_juridica:
