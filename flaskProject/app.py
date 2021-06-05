@@ -16,6 +16,7 @@ def autenticacao(usuario, senha):
 app = Flask(__name__, template_folder="view")
 
 
+@app.route('/index')
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -26,7 +27,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/autentica',methods=['POST'])
+@app.route('/autentica', methods=['POST'])
 def autentica():
     user = int(request.form['usuario'])
     senha = str(request.form['senha'])
@@ -51,14 +52,19 @@ def signin():
     return render_template("criar_conta.html")
 
 
+@app.route('/criar_conta_pj')
+def signinpj():
+    return render_template("criar_conta_pj.html")
+
+
 @app.route('/conta_criada',methods=["POST"])
 def conta_criada():
-    cpfcnpj = int(request.form['usuario'])
-    senha = str(request.form['senha'])
+    cpf = int(request.form['usuario'])
+    senha = int(request.form['senha'])
     nome = request.form['nome']
     email = request.form['email']
     renda_mensal = request.form['renda']
-    contas.append([cpfcnpj, senha, nome, email, renda_mensal, "27"])
+    contas.append([cpf, senha, nome, email, renda_mensal, "27"])
     return render_template("conta_criada.html")
 
 
@@ -78,7 +84,7 @@ def perfil():
             print("Usuário não encontrado.")
     name = info[2]
     email = info[3]
-    return render_template("perfil.html",nome=name,email=email)
+    return render_template("perfil.html", nome=name, email=email)
 
 
 @app.route('/usuario')
@@ -94,6 +100,11 @@ def usuario():
             print("Usuário não encontrado.")
     user = info[2]
     return render_template("usuario.html", name=user)
+
+
+@app.route('/configurar_conta')
+def configurar_conta():
+    return render_template("configurar_conta.html")
 
 
 @app.route('/config_cartao')
