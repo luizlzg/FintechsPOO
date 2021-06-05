@@ -60,7 +60,7 @@ def signinpj():
 @app.route('/conta_criada', methods=["POST"])
 def conta_criada():
     cpf = int(request.form['usuario'])
-    senha = int(request.form['senha'])
+    senha = str(request.form['senha'])
     nome = request.form['nome']
     email = request.form['email']
     renda_mensal = request.form['renda']
@@ -84,7 +84,7 @@ def perfil():
             print("Usuário não encontrado.")
     name = info[2]
     email = info[3]
-    renda = info[-2]
+    renda = "R$" + str(info[-2])
     return render_template("perfil.html", nome=name, email=email, renda=renda)
 
 
