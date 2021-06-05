@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Criar Conta</title>
-</head>
-<body>
-     <h1>Página de Cadastro</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Criar Conta</title>
+    </head>
+    <body>
+        <h1>Página de Cadastro</h1>
         <hr>
         <form action="conta_criada" method="POST">
             <table>
@@ -28,5 +28,5 @@
             </table><br>
             <input type="submit" value="Cadastrar">
         </form>
-</body>
+    </body>
 </html>
