@@ -49,11 +49,11 @@ def signin():
 
 @app.route('/conta_criada',methods=["POST"])
 def conta_criada():
-    cpfcnpj = int(request.form['usuario'])
+    cpf = int(request.form['usuario'])
     senha = int(request.form['senha'])
     nome = request.form['nome']
     email = request.form['email']
-    contas.append([cpfcnpj, senha,nome,email])
+    contas.append([cpf, senha,nome,email])
     return render_template("conta_criada.html")
 
 @app.route('/menu')
