@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+    <head>
+        <meta charset="UTF-8">
         <title>Configurar Conta</title>
-</head>
-<body>
-     <h1></h1>
-        <hr>
-            <form action="index">
+    </head>
+    <body>
+        <form action="index" method="GET">
             <input type="submit" value="Excluir Conta">
         </form>
-</body>
+    </body>
 </html>
