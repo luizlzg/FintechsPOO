@@ -15,7 +15,7 @@ def autenticacao(usuario,senha):
 
 app = Flask(__name__, template_folder="view")
 
-
+@app.route('/index')
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -84,6 +84,10 @@ def usuario():
             print("Usuário não encontrado.")
     user = info[2]
     return render_template("usuario.html",name=user)
+
+@app.route('/configurar_conta')
+def configurar_conta():
+    return render_template("configurar_conta.html")
 
 
 if __name__ == '__main__':
